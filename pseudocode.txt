@@ -1,0 +1,12 @@
+** This document is less a pseudocode and more of a development plan **
+
+Create async functions to call API for current day forecast and 7 day
+    forecast based on user input city.
+        - function should be able to display data (high, low, humidity, conditions)
+        - function should take an argument to determine if temp
+            should be displayed as F or C
+
+Create a form to allow user to input a specific city and call weather functions
+
+Create functions to style page according to weather conditions
+    - i.e. cloudy, sunny, rainy, snowy background image depending on weather
