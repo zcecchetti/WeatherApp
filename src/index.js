@@ -1,4 +1,5 @@
 import './style.css';
+import { format, addDays } from 'date-fns';
 
 const apiKey = 'b28c7ed03e1d13347ecb843c2c580d4c';
 
@@ -11,8 +12,9 @@ function weatherData(jsonForecast) {
   const tempMin = day0.temp.min;
   const weather = jsonForecast.current.weather[0];
   const sky = weather.main;
+  const today = format(new Date(), 'EEEE, MMMM d');
   const current = {
-    temp, humidity, tempMax, tempMin, sky,
+    temp, humidity, tempMax, tempMin, sky, today,
   };
 
   // create dictionaries to store future weather data by day
@@ -25,8 +27,9 @@ function weatherData(jsonForecast) {
     const futureMin = day.temp.min;
     const skyWeather = day.weather[0];
     const futureSky = skyWeather.main;
+    const futureDay = format(addDays(new Date(), i), 'EEEE, MMMM d');
     futureWeather[i - 1] = {
-      futureTemp, futureMax, futureMin, futureSky,
+      futureTemp, futureMax, futureMin, futureSky, futureDay,
     };
   }
 
