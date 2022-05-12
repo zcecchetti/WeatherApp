@@ -6,15 +6,32 @@ const apiKey = 'b28c7ed03e1d13347ecb843c2c580d4c';
 function weatherData(jsonForecast) {
   const { temp } = jsonForecast.current;
   const { humidity } = jsonForecast.current;
-  const today = jsonForecast.daily[0];
-  const tempMax = today.temp.max;
-  const tempMin = today.temp.min;
+  const day0 = jsonForecast.daily[0];
+  const tempMax = day0.temp.max;
+  const tempMin = day0.temp.min;
+  const weather = jsonForecast.current.weather[0];
+  const sky = weather.main;
   const current = {
-    temp, humidity, tempMax, tempMin,
+    temp, humidity, tempMax, tempMin, sky,
   };
 
+  // create dictionaries to store future weather data by day
+  const futureWeather = [];
+
+  for (let i = 1; i < 8; i += 1) {
+    const day = jsonForecast.daily[i];
+    const futureTemp = day.temp.day;
+    const futureMax = day.temp.max;
+    const futureMin = day.temp.min;
+    const skyWeather = day.weather[0];
+    const futureSky = skyWeather.main;
+    futureWeather[i - 1] = {
+      futureTemp, futureMax, futureMin, futureSky,
+    };
+  }
+
   return {
-    current,
+    current, futureWeather,
   };
 }
 
@@ -24,7 +41,7 @@ async function getWeather(longitude, latitude) {
     const weather = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`, { mode: 'cors' });
     const jsonForecast = await weather.json();
     const userWeather = weatherData(jsonForecast);
-    console.log('current weather:', userWeather);
+    console.log('current weather:', jsonForecast, userWeather);
   } catch {
     console.log('err');
   }
