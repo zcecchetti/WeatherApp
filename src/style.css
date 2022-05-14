@@ -26,3 +26,8 @@ body {
     align-items: center;
     background-color: rgb(210, 197, 180);
 }
+
+.autocomplete-container {
+    position: relative;
+    width: 30vh;
+}
