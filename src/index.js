@@ -1,12 +1,18 @@
+/* eslint-disable import/prefer-default-export */
 /* eslint-disable no-console */
 import './style.css';
 import { format, addDays } from 'date-fns';
 import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
+import { addCurrentWeather, addFutureWeather } from './html';
 
 const apiKey = 'b28c7ed03e1d13347ecb843c2c580d4c';
 
+// store weather data in array in global scope
+const weatherArray = [];
+
 // create object that holds weather data for user input city
-function weatherData(jsonForecast) {
+const weatherData = function (jsonForecast, location) {
+  const { city } = location.properties;
   const { temp } = jsonForecast.current;
   const { humidity } = jsonForecast.current;
   const day0 = jsonForecast.daily[0];
@@ -16,7 +22,7 @@ function weatherData(jsonForecast) {
   const sky = weather.main;
   const today = format(new Date(), 'EEEE, MMMM d');
   const current = {
-    temp, humidity, tempMax, tempMin, sky, today,
+    temp, humidity, tempMax, tempMin, sky, today, city,
   };
 
   // create dictionaries to store future weather data by day
@@ -37,7 +43,7 @@ function weatherData(jsonForecast) {
   return {
     current, futureWeather,
   };
-}
+};
 
 // async function to get weather data from API and create object to store data
 async function getWeather(location) {
@@ -46,8 +52,9 @@ async function getWeather(location) {
     const latitude = location.properties.lat;
     const weather = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`, { mode: 'cors' });
     const jsonForecast = await weather.json();
-    const userWeather = weatherData(jsonForecast);
-    console.log('current weather:', userWeather);
+    const userWeather = await weatherData(jsonForecast, location);
+    // console.log('current weather:', userWeather);
+    weatherArray[weatherArray.length] = userWeather;
   } catch {
     console.log('err');
   }
@@ -59,7 +66,16 @@ const autocomplete = new GeocoderAutocomplete(
   'b0a58b077de948e0a4085085cffda14b',
   { type: 'city' },
 );
+
+// const searchButton = document.getElementById('searchWeather');
 autocomplete.on('select', (location) => {
   getWeather(location);
-//   getLocationAndWeather(location);
+});
+
+const searchButton = document.getElementById('searchWeather');
+searchButton.addEventListener('click', () => {
+  const weatherObject = weatherArray[weatherArray.length - 1];
+  addCurrentWeather(weatherObject);
+  addFutureWeather(weatherObject);
+//   console.log(weatherArray[weatherArray.length - 1]);
 });

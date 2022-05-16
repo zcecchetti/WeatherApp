@@ -29,5 +29,8 @@ body {
 
 .autocomplete-container {
     position: relative;
-    width: 30vh;
+}
+
+.geoapify-autocomplete-input {
+    width: 25vw;
 }
