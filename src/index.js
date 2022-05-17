@@ -19,10 +19,11 @@ function weatherData(jsonForecast, location) {
   const tempMax = day0.temp.max;
   const tempMin = day0.temp.min;
   const weather = jsonForecast.current.weather[0];
-  const sky = weather.main;
+  const skyIcon = weather.main;
+  const sky = weather.description;
   const today = format(new Date(), 'EEEE, MMMM d');
   const current = {
-    temp, humidity, tempMax, tempMin, sky, today, city,
+    temp, humidity, tempMax, tempMin, sky, today, city, skyIcon,
   };
 
   // create dictionaries to store future weather data by day
@@ -33,7 +34,8 @@ function weatherData(jsonForecast, location) {
     const futureMax = day.temp.max;
     const futureMin = day.temp.min;
     const skyWeather = day.weather[0];
-    const futureSky = skyWeather.main;
+    const futureIcon = skyWeather.main;
+    const futureSky = skyWeather.description;
     let futureDay;
     if (i === 1) {
       futureDay = 'Tomorrow';
@@ -41,7 +43,7 @@ function weatherData(jsonForecast, location) {
       futureDay = format(addDays(new Date(), i), 'EEEE, MMMM d');
     }
     futureWeather[i - 1] = {
-      futureMax, futureMin, futureSky, futureDay,
+      futureMax, futureMin, futureSky, futureDay, futureIcon,
     };
   }
 

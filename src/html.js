@@ -8,16 +8,16 @@ function addCurrentWeather(weatherObject) {
   currentContainer.setAttribute('id', 'currentContainer');
   const currentTemp = document.createElement('div');
   currentTemp.setAttribute('id', 'currentTemp');
-  currentTemp.textContent = weatherObject.current.temp;
+  currentTemp.textContent = `${weatherObject.current.temp}\u00B0`;
   const city = document.createElement('div');
   city.setAttribute('id', 'city');
   city.textContent = weatherObject.current.city;
   const minTemp = document.createElement('div');
   minTemp.setAttribute('id', 'minTemp');
-  minTemp.textContent = `Low: ${weatherObject.current.tempMin}`;
+  minTemp.textContent = `Low: ${weatherObject.current.tempMin}\u00B0`;
   const maxTemp = document.createElement('div');
   maxTemp.setAttribute('id', 'maxTemp');
-  maxTemp.textContent = ` High: ${weatherObject.current.tempMax}`;
+  maxTemp.textContent = ` High: ${weatherObject.current.tempMax}\u00B0`;
   const sky = document.createElement('div');
   sky.setAttribute('id', 'sky');
   sky.textContent = weatherObject.current.sky;
@@ -49,10 +49,10 @@ function addFutureWeather(weatherObject) {
     futureSky.textContent = day.futureSky;
     const futureMax = document.createElement('futureMax');
     futureMax.setAttribute('class', 'futureMax');
-    futureMax.textContent = `High: ${day.futureMax}`;
+    futureMax.textContent = `High: ${day.futureMax}\u00B0`;
     const futureMin = document.createElement('div');
     futureMin.setAttribute('class', 'futureMin');
-    futureMin.textContent = `Low: ${day.futureMin}`;
+    futureMin.textContent = `Low: ${day.futureMin}\u00B0`;
     futureDay.appendChild(dayTitle);
     futureDay.appendChild(futureSky);
     futureDay.appendChild(futureMax);
@@ -79,11 +79,21 @@ function removeContainer() {
   }
 }
 
+// determine which image should be used to represent weather conditions
+function decideWeather() {
+  const imageContainer = document.getElementById('content');
+  const img = document.createElement('img');
+  img.setAttribute('class', 'weatherIcon');
+  img.src = './icons/sunny.png';
+  imageContainer.appendChild(img);
+}
+
 // call all previous functions
 function displayWeather(weatherObject) {
   removeContainer();
   addContainer();
   addCurrentWeather(weatherObject);
   addFutureWeather(weatherObject);
+  decideWeather();
 }
 export { displayWeather };
