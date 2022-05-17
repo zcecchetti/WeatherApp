@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 // import weatherData from './index';
+// import { decideWeather } from './index';
 
 // add current weather to DOM
 function addCurrentWeather(weatherObject) {
@@ -29,6 +30,27 @@ function addCurrentWeather(weatherObject) {
   container.appendChild(currentContainer);
 }
 
+// determine which image should be used to represent weather conditions
+function decideWeather(skyIcon) {
+  let imgAdd;
+
+  if (skyIcon === 'Clear') {
+    imgAdd = './icons/sunny.png';
+  } else if (skyIcon === 'Clouds') {
+    imgAdd = './icons/cloudy-day.png';
+  } else if (skyIcon === 'Snow') {
+    imgAdd = './icons/snowfall.png';
+  } else if (skyIcon === 'Rain' || skyIcon === 'Drizzle') {
+    imgAdd = './icons/downpour.png';
+  } else if (skyIcon === 'Thunderstorm') {
+    imgAdd = './icons/dark-and-stormy.png';
+  } else {
+    imgAdd = './icons/cloudy-day.png';
+  }
+
+  return imgAdd;
+}
+
 // add 7 day forecast to DOM
 function addFutureWeather(weatherObject) {
   const container = document.getElementById('container');
@@ -53,7 +75,12 @@ function addFutureWeather(weatherObject) {
     const futureMin = document.createElement('div');
     futureMin.setAttribute('class', 'futureMin');
     futureMin.textContent = `Low: ${day.futureMin}\u00B0`;
+    const skyImg = document.createElement('img');
+    const imgAdd = decideWeather(day.futureIcon);
+    skyImg.setAttribute('class', 'weatherIcon');
+    skyImg.src = `${imgAdd}`;
     futureDay.appendChild(dayTitle);
+    futureDay.appendChild(skyImg);
     futureDay.appendChild(futureSky);
     futureDay.appendChild(futureMax);
     futureDay.appendChild(futureMin);
@@ -79,21 +106,11 @@ function removeContainer() {
   }
 }
 
-// determine which image should be used to represent weather conditions
-function decideWeather() {
-  const imageContainer = document.getElementById('content');
-  const img = document.createElement('img');
-  img.setAttribute('class', 'weatherIcon');
-  img.src = './icons/sunny.png';
-  imageContainer.appendChild(img);
-}
-
 // call all previous functions
 function displayWeather(weatherObject) {
   removeContainer();
   addContainer();
   addCurrentWeather(weatherObject);
   addFutureWeather(weatherObject);
-  decideWeather();
 }
 export { displayWeather };
