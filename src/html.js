@@ -14,14 +14,18 @@ function addCurrentWeather(weatherObject) {
   city.textContent = weatherObject.current.city;
   const minTemp = document.createElement('div');
   minTemp.setAttribute('id', 'minTemp');
-  minTemp.textContent = weatherObject.current.tempMin;
+  minTemp.textContent = `Low: ${weatherObject.current.tempMin}`;
   const maxTemp = document.createElement('div');
   maxTemp.setAttribute('id', 'maxTemp');
-  maxTemp.textContent = weatherObject.current.tempMax;
+  maxTemp.textContent = ` High: ${weatherObject.current.tempMax}`;
+  const sky = document.createElement('div');
+  sky.setAttribute('id', 'sky');
+  sky.textContent = weatherObject.current.sky;
   currentContainer.appendChild(city);
   currentContainer.appendChild(currentTemp);
   currentContainer.appendChild(minTemp);
   currentContainer.appendChild(maxTemp);
+  currentContainer.appendChild(sky);
   container.appendChild(currentContainer);
 }
 
