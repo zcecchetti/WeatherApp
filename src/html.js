@@ -3,7 +3,7 @@
 
 // add current weather to DOM
 function addCurrentWeather(weatherObject) {
-  const container = document.getElementById('content');
+  const container = document.getElementById('container');
   const currentContainer = document.createElement('div');
   currentContainer.textContent = `${weatherObject.current.temp} ${weatherObject.current.city}`;
   container.appendChild(currentContainer);
@@ -11,7 +11,7 @@ function addCurrentWeather(weatherObject) {
 
 // add 7 day forecast to DOM
 function addFutureWeather(weatherObject) {
-  const container = document.getElementById('content');
+  const container = document.getElementById('container');
 
   const futureDays = weatherObject.futureWeather;
   // add each day to DOM at a time
@@ -23,4 +23,28 @@ function addFutureWeather(weatherObject) {
   }
 }
 
-export { addCurrentWeather, addFutureWeather };
+// create element to hold html content
+function addContainer() {
+  const content = document.getElementById('content');
+  const currentContainer = document.createElement('div');
+  currentContainer.setAttribute('id', 'container');
+  content.appendChild(currentContainer);
+}
+
+// delete element holding html content
+function removeContainer() {
+  const content = document.getElementById('content');
+  const currentContainer = document.getElementById('container');
+  if (currentContainer) {
+    content.removeChild(currentContainer);
+  }
+}
+
+// call all previous functions
+function displayWeather(weatherObject) {
+  removeContainer();
+  addContainer();
+  addCurrentWeather(weatherObject);
+  addFutureWeather(weatherObject);
+}
+export { displayWeather };

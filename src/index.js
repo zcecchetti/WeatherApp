@@ -3,7 +3,7 @@
 import './style.css';
 import { format, addDays } from 'date-fns';
 import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
-import { addCurrentWeather, addFutureWeather } from './html';
+import { displayWeather } from './html';
 
 const apiKey = 'b28c7ed03e1d13347ecb843c2c580d4c';
 
@@ -11,7 +11,7 @@ const apiKey = 'b28c7ed03e1d13347ecb843c2c580d4c';
 const weatherArray = [];
 
 // create object that holds weather data for user input city
-const weatherData = function (jsonForecast, location) {
+function weatherData(jsonForecast, location) {
   const { city } = location.properties;
   const { temp } = jsonForecast.current;
   const { humidity } = jsonForecast.current;
@@ -43,7 +43,7 @@ const weatherData = function (jsonForecast, location) {
   return {
     current, futureWeather,
   };
-};
+}
 
 // async function to get weather data from API and create object to store data
 async function getWeather(location) {
@@ -52,9 +52,8 @@ async function getWeather(location) {
     const latitude = location.properties.lat;
     const weather = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly,minutely,alerts&appid=${apiKey}&units=imperial`, { mode: 'cors' });
     const jsonForecast = await weather.json();
-    const userWeather = await weatherData(jsonForecast, location);
-    // console.log('current weather:', userWeather);
-    weatherArray[weatherArray.length] = userWeather;
+    const weatherObject = await weatherData(jsonForecast, location);
+    displayWeather(weatherObject);
   } catch {
     console.log('err');
   }
@@ -67,15 +66,12 @@ const autocomplete = new GeocoderAutocomplete(
   { type: 'city' },
 );
 
-// const searchButton = document.getElementById('searchWeather');
 autocomplete.on('select', (location) => {
-  getWeather(location);
+  weatherArray[weatherArray.length] = location;
 });
 
 const searchButton = document.getElementById('searchWeather');
 searchButton.addEventListener('click', () => {
   const weatherObject = weatherArray[weatherArray.length - 1];
-  addCurrentWeather(weatherObject);
-  addFutureWeather(weatherObject);
-//   console.log(weatherArray[weatherArray.length - 1]);
+  getWeather(weatherObject);
 });
