@@ -41,7 +41,22 @@ function addFutureWeather(weatherObject) {
     const day = futureDays[i];
     const futureDay = document.createElement('div');
     futureDay.setAttribute('class', 'futureDay');
-    futureDay.textContent = `${day.futureDay} Max: ${day.futureMax} Min: ${day.futureMin}`;
+    const dayTitle = document.createElement('div');
+    dayTitle.setAttribute('class', 'dayTitle');
+    dayTitle.textContent = day.futureDay;
+    const futureSky = document.createElement('div');
+    futureSky.setAttribute('class', 'futureSky');
+    futureSky.textContent = day.futureSky;
+    const futureMax = document.createElement('futureMax');
+    futureMax.setAttribute('class', 'futureMax');
+    futureMax.textContent = `High: ${day.futureMax}`;
+    const futureMin = document.createElement('div');
+    futureMin.setAttribute('class', 'futureMin');
+    futureMin.textContent = `Low: ${day.futureMin}`;
+    futureDay.appendChild(dayTitle);
+    futureDay.appendChild(futureSky);
+    futureDay.appendChild(futureMax);
+    futureDay.appendChild(futureMin);
     futureContainer.appendChild(futureDay);
   }
   container.appendChild(futureContainer);
