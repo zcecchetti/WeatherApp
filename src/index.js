@@ -34,7 +34,12 @@ function weatherData(jsonForecast, location) {
     const futureMin = day.temp.min;
     const skyWeather = day.weather[0];
     const futureSky = skyWeather.main;
-    const futureDay = format(addDays(new Date(), i), 'EEEE, MMMM d');
+    let futureDay;
+    if (i === 1) {
+      futureDay = 'Tomorrow';
+    } else {
+      futureDay = format(addDays(new Date(), i), 'EEEE, MMMM d');
+    }
     futureWeather[i - 1] = {
       futureMax, futureMin, futureSky, futureDay,
     };
@@ -74,7 +79,6 @@ autocomplete.on('select', (location) => {
 function submitSearch() {
   const weatherObject = weatherArray[weatherArray.length - 1];
   getWeather(weatherObject);
-  return false;
 }
 
 // add submitSearch to onsubmit
@@ -83,9 +87,3 @@ form.addEventListener('submit', () => {
   submitSearch();
 });
 form.setAttribute('onsubmit', ';return false');
-
-// const searchButton = document.getElementById('searchWeather');
-// searchButton.addEventListener('click', () => {
-//   const weatherObject = weatherArray[weatherArray.length - 1];
-//   getWeather(weatherObject);
-// });

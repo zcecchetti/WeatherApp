@@ -23,8 +23,6 @@ body {
 #locationForm {
     display: flex;
     flex-direction: row;
-    /* align-items: center;
-    justify-content: center; */
 }
 
 #content {
@@ -46,4 +44,24 @@ body {
 
 .geoapify-autocomplete-input {
     width: 25vw;
+}
+
+#currentContainer {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+#city {
+    font-size: 3rem;
+    height: 4rem;
+}
+
+#currentTemp {
+    font-size: 4rem;
+}
+
+#currentContainer {
+    display: grid;
+    height: 25rem;
 }
