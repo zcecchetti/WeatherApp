@@ -70,8 +70,22 @@ autocomplete.on('select', (location) => {
   weatherArray[weatherArray.length] = location;
 });
 
-const searchButton = document.getElementById('searchWeather');
-searchButton.addEventListener('click', () => {
+// get weatherObject and call getWeather when form submits
+function submitSearch() {
   const weatherObject = weatherArray[weatherArray.length - 1];
   getWeather(weatherObject);
+  return false;
+}
+
+// add submitSearch to onsubmit
+const form = document.getElementById('locationForm');
+form.addEventListener('submit', () => {
+  submitSearch();
 });
+form.setAttribute('onsubmit', ';return false');
+
+// const searchButton = document.getElementById('searchWeather');
+// searchButton.addEventListener('click', () => {
+//   const weatherObject = weatherArray[weatherArray.length - 1];
+//   getWeather(weatherObject);
+// });
