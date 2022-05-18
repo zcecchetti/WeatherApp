@@ -89,6 +89,14 @@ function addFutureWeather(weatherObject) {
   container.appendChild(futureContainer);
 }
 
+// get gif for background
+async function getBackground() {
+  const content = document.getElementById('maxContainer');
+  const imgFetch = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=MXoojr4VyHcyewnmrrfcAzgfpO5zzOns&s=nature', { mode: 'cors' });
+  const imgJson = await imgFetch.json();
+  content.style.backgroundImage = `url(${imgJson.data.images.original.url})`;
+}
+
 // create element to hold html content
 function addContainer() {
   const content = document.getElementById('content');
@@ -106,9 +114,26 @@ function removeContainer() {
   }
 }
 
+// determine if maxContainer is present and create div if not
+function findContentContainer() {
+  const maxContainer = document.getElementById('maxContainer');
+  if (!maxContainer) {
+    const newMaxContainer = document.createElement('div');
+    newMaxContainer.setAttribute('id', 'maxContainer');
+    const contentContainer = document.createElement('div');
+    contentContainer.setAttribute('id', 'content');
+    const body = document.getElementsById('body');
+    const footer = document.getElementById('footer');
+    newMaxContainer.appendChild(contentContainer);
+    body.insertBefore(newMaxContainer, footer);
+  }
+}
+
 // call all previous functions
 function displayWeather(weatherObject) {
+  findContentContainer();
   removeContainer();
+  getBackground();
   addContainer();
   addCurrentWeather(weatherObject);
   addFutureWeather(weatherObject);

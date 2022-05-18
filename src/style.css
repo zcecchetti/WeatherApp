@@ -14,17 +14,25 @@ body {
 
 #header {
     height: 4rem;
-    background-color: rgb(69, 70, 73);
+    background-color: rgb(22, 57, 19);
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+    flex-grow: 1;
+}
 
+#maxContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-size: cover;
 }
 
 #content {
-    flex: 1;
+    /* flex: 1; */
     display: flex;
-    margin: 48px 248px;
+    margin: 72px 72px;
     background-color: rgba(237, 234, 234, 0.7);
     border-radius: 8px;
     color: black;
@@ -57,14 +65,14 @@ body {
     flex-direction: column;
     flex: 1;
     justify-content: space-between;
-    padding: 24px 0 0 0;
+    padding: 0;
 }
 
 #currentContainer {
-    padding: 48px 0 0 24px;
+    padding: 24px 0;
     display: grid;
     grid-template-columns: 1fr 10rem 10rem 1fr;
-    grid-template-rows: 6rem 12rem 2rem 2rem;
+    grid-template-rows: 6rem 10rem 2rem 2rem;
     gap: 8px;
 }
 
@@ -74,13 +82,12 @@ body {
     grid-column: 1 / 5;
     grid-row: 1 / 2;
     justify-self: center;
-    align-self: flex-end;
 }
 
 #currentTemp {
     justify-self: center;
     align-self: flex-end;
-    font-size: 10rem;
+    font-size: 8rem;
     grid-column: 2 / 4;
     grid-row: 2 / 3;
 }
@@ -112,10 +119,8 @@ body {
     display: grid;
     justify-content: center;
     padding: 48px 8px;
-    grid-template-columns: repeat(auto-fit, 225px);
-    /* background-color: rgb(83, 117, 218); */
+    grid-template-columns: repeat(auto-fit, 200px);
     gap: 8px
-    /* justify-self: flex-end; */
 }
 
 .futureDay {
