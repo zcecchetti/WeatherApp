@@ -90,9 +90,10 @@ function addFutureWeather(weatherObject) {
 }
 
 // get gif for background
-async function getBackground() {
+async function getBackground(weatherObject) {
+  const weatherType = weatherObject.current.sky;
   const content = document.getElementById('maxContainer');
-  const imgFetch = await fetch('https://api.giphy.com/v1/gifs/translate?api_key=MXoojr4VyHcyewnmrrfcAzgfpO5zzOns&s=nature', { mode: 'cors' });
+  const imgFetch = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=MXoojr4VyHcyewnmrrfcAzgfpO5zzOns&s=${weatherType}`, { mode: 'cors' });
   const imgJson = await imgFetch.json();
   content.style.backgroundImage = `url(${imgJson.data.images.original.url})`;
 }
@@ -114,15 +115,18 @@ function removeContainer() {
   }
 }
 
-// determine if maxContainer is present and create div if not
+// determine if maxContainer is present and create div if not / remove greeting from header
 function findContentContainer() {
   const maxContainer = document.getElementById('maxContainer');
   if (!maxContainer) {
+    const greeting = document.getElementById('greeting');
+    const header = document.getElementById('header');
+    header.removeChild(greeting);
     const newMaxContainer = document.createElement('div');
     newMaxContainer.setAttribute('id', 'maxContainer');
     const contentContainer = document.createElement('div');
     contentContainer.setAttribute('id', 'content');
-    const body = document.getElementsById('body');
+    const body = document.getElementById('body');
     const footer = document.getElementById('footer');
     newMaxContainer.appendChild(contentContainer);
     body.insertBefore(newMaxContainer, footer);
@@ -133,7 +137,7 @@ function findContentContainer() {
 function displayWeather(weatherObject) {
   findContentContainer();
   removeContainer();
-  getBackground();
+  getBackground(weatherObject);
   addContainer();
   addCurrentWeather(weatherObject);
   addFutureWeather(weatherObject);

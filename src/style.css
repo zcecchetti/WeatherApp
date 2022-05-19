@@ -14,12 +14,15 @@ body {
 
 #header {
     height: 4rem;
-    background-color: rgb(22, 57, 19);
+    background-color: rgb(88, 152, 82);
     display: flex;
+    flex-direction: column;
+    gap: 24px;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     flex-grow: 1;
+    border-bottom: 2px solid rgb(76, 76, 76);
 }
 
 #maxContainer {
@@ -32,7 +35,7 @@ body {
 #content {
     /* flex: 1; */
     display: flex;
-    margin: 72px 72px;
+    margin: 48px 72px;
     background-color: rgba(237, 234, 234, 0.7);
     border-radius: 8px;
     color: black;
@@ -72,28 +75,45 @@ body {
     padding: 24px 0;
     display: grid;
     grid-template-columns: 1fr 10rem 10rem 1fr;
-    grid-template-rows: 6rem 10rem 2rem 2rem;
+    grid-template-rows: 3rem 6rem 2rem 2rem;
     gap: 8px;
 }
 
+#greeting {
+    font-size: 6rem;
+    background: linear-gradient(to right, #ef5350, #f48fb1, #7e57c2, #2196f3, #26c6da, #43a047, #eeff41, #f9a825, #ff5722);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 2px rgb(76, 76, 76);
+}
+
 #city {
-    font-size: 4rem;
-    height: 4rem;
+    font-size: 3rem;
+    /* height: 4rem; */
     grid-column: 1 / 5;
+    display: flex;
+    justify-content: flex-start;
     grid-row: 1 / 2;
     justify-self: center;
 }
 
+a {
+    color: black;
+}
+
 #currentTemp {
     justify-self: center;
-    align-self: flex-end;
-    font-size: 8rem;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 6rem;
     grid-column: 2 / 4;
     grid-row: 2 / 3;
 }
 
 #sky {
     justify-self: center;
+    display: flex;
+    justify-content: center;
     font-size: 2rem;
     grid-column: 2 / 4;
     grid-row: 3 / 4;

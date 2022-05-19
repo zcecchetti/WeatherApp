@@ -70,7 +70,7 @@ async function getWeather(location) {
 const autocomplete = new GeocoderAutocomplete(
   document.getElementById('autocomplete'),
   'b0a58b077de948e0a4085085cffda14b',
-  { type: 'city' },
+  { placeholder: 'Enter a City Name', type: 'city' },
 );
 
 autocomplete.on('select', (location) => {
